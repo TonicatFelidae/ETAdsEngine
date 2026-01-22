@@ -1,7 +1,7 @@
 import { _decorator, Component, Node } from 'cc';
-import { IUINode } from '../ETSupportKit/Abstract/IUINode';
-import { SoundGeneral, SoundType } from '../ETSupportKit/SoundGeneral';
-import { GeneralObject } from '../GeneralObject';
+import { IUINode } from '../../../ETSupportKit/Abstract/IUINode';
+import { SoundGeneral, SoundType } from '../../../ETSupportKit/SoundGeneral';
+import { GeneralObject } from 'db://assets/Game/___Script___/GeneralObject';
 const { ccclass, property } = _decorator;
 
 @ccclass('DownloadUI')

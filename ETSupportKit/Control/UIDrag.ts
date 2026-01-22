@@ -1,5 +1,5 @@
 import { _decorator, Component, Node, Vec3, EventTouch, UITransform, input, Input } from 'cc';
-import { GeneralObject } from '../../GeneralObject';
+import { GeneralObject } from 'db://assets/Game/___Script___/GeneralObject';
 const { ccclass, property } = _decorator;
 
 @ccclass('UIDrag')

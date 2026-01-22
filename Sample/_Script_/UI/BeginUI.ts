@@ -1,5 +1,5 @@
 import { _decorator, Component, Node } from 'cc';
-import { IUINode } from '../ETSupportKit/Abstract/IUINode';
+import { IUINode } from '../../../ETSupportKit/Abstract/IUINode';
 const { ccclass, property } = _decorator;
 
 @ccclass('BeginUI')

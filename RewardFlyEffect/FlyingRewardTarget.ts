@@ -1,5 +1,5 @@
 import { _decorator, Component, Node, Label, tween, Vec3 } from 'cc';
-import { SoundGeneral, SoundType } from './ETSupportKit/SoundGeneral';
+import { SoundGeneral, SoundType } from '../ETSupportKit/SoundGeneral';
 const { ccclass, property } = _decorator;
 
 @ccclass('FlyingRewardTarget')

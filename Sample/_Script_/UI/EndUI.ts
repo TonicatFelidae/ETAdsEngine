@@ -1,7 +1,6 @@
 import { _decorator, Component, Node } from 'cc';
-import { IUINode } from '../ETSupportKit/Abstract/IUINode';
-import { EffectGeneral } from '../ETSupportKit/EffectGeneral';
-import { SoundGeneral, SoundType } from '../ETSupportKit/SoundGeneral';
+import { IUINode } from '../../../ETSupportKit/Abstract/IUINode';
+import { SoundGeneral, SoundType } from '../../../ETSupportKit/SoundGeneral';
 const { ccclass, property } = _decorator;
 
 @ccclass('EndUI')

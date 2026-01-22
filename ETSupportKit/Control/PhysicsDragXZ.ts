@@ -1,5 +1,5 @@
 import { _decorator, Component, Camera, RigidBody, Vec3, Vec2, geometry, input, Input, PhysicsSystem } from 'cc';
-import { GeneralObject } from '../../GeneralObject';
+import { GeneralObject } from 'db://assets/Game/___Script___/GeneralObject';
 const { ccclass, property } = _decorator;
 
 @ccclass('PhysicsDragXZ')
