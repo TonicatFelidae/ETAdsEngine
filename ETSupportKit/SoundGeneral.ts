@@ -43,9 +43,10 @@ export class SoundGeneral extends Singleton<SoundGeneral> {
      * @param type BG / EF / UI (enum)
      * @param clipId index of clip in the array for that type
      */
-    public Play(type: SoundType, clipId: number) {
+    public Play(type: SoundType, clipId: number, volumn: number = 1) {
         let clip = this.GetClip(type,clipId);
         this.audioSources[type].clip = clip;
+        this.audioSources[type].volume = volumn;
         this.audioSources[type].stop();
         this.audioSources[type].play();
     }
