@@ -1,0 +1,3 @@
+[submodule "assets/Plugins/ETAdsEngine"]
+	path = assets/Plugins/ETAdsEngine
+	url = https://github.com/TonicatFelidae/ETAdsEngine
