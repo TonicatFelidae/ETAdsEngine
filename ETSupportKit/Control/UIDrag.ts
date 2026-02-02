@@ -1,14 +1,10 @@
 import { _decorator, Component, Node, Vec3, EventTouch, UITransform, input, Input } from 'cc';
-import { GeneralObject } from 'db://assets/Game/___Script___/GeneralObject';
 const { ccclass, property } = _decorator;
 
 @ccclass('UIDrag')
 export class UIDrag extends Component {
     @property(UITransform)
     public parentUITransform: UITransform | null = null;
-    
-    @property(GeneralObject)
-    public generalObject: GeneralObject | null = null;
 
     @property
     public speed: number = 0.1;
@@ -33,7 +29,6 @@ export class UIDrag extends Component {
 
     private _onTouchStart(event: EventTouch) {
 
-        if (!this.generalObject.isScrollalbe) return;
         const screen = event.getUILocation();
         const local =  this.parentUITransform.convertToNodeSpaceAR(new Vec3(screen.x, screen.y, 0));
         this._dragging = true;
@@ -41,9 +36,7 @@ export class UIDrag extends Component {
     }
 
     private _onTouchMove(event: EventTouch) {
-        if (!this.generalObject.isScrollalbe) return;
         if (!this._dragging) return;
-        if (!this.generalObject.isBeginScroll) this.generalObject.onFirsScroll();
 
         // Convert screen position to parent local space
         const curScreen = event.getUILocation();
