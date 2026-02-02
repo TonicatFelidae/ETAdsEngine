@@ -1,7 +1,6 @@
 import { _decorator, Component, Node } from 'cc';
 import { IUINode } from '../../../ETSupportKit/Abstract/IUINode';
 import { SoundGeneral, SoundType } from '../../../ETSupportKit/SoundGeneral';
-import { GeneralObject } from 'db://assets/Game/___Script___/GeneralObject';
 const { ccclass, property } = _decorator;
 
 @ccclass('DownloadUI')
@@ -12,19 +11,19 @@ export class DownloadUI extends IUINode {
     
     @property(Node)
     chestClose: Node = null;
+    isShowChest: boolean = false;
     
     start() {
         SoundGeneral.instance.Play(SoundType.EF,4);
         
         // Check win/lose state and show appropriate chest
-        const isShowChest = GeneralObject.instance.score > 0;
         
         if (this.chestOpen) {
-            this.chestOpen.active = isShowChest;
+            this.chestOpen.active = this.isShowChest;
         }
         
         if (this.chestClose) {
-            this.chestClose.active = !isShowChest;
+            this.chestClose.active = !this.isShowChest;
         }
     }
 
