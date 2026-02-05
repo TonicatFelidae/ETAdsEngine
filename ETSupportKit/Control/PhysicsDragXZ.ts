@@ -1,5 +1,4 @@
 import { _decorator, Component, Camera, RigidBody, Vec3, Vec2, geometry, input, Input, PhysicsSystem } from 'cc';
-import { GeneralObject } from 'db://assets/Game/___Script___/GeneralObject';
 const { ccclass, property } = _decorator;
 
 @ccclass('PhysicsDragXZ')
@@ -17,7 +16,6 @@ export class PhysicsDragXZ extends Component {
   private _rigid: RigidBody | null = null;
   private _targetWorld = new Vec3();
   private _dragging = false;
-  private _generalObject: GeneralObject | null = null;
   onLoad () {
     input.on(Input.EventType.TOUCH_START, this._onDown, this);
     input.on(Input.EventType.TOUCH_MOVE, this._onMove, this);
@@ -26,7 +24,6 @@ export class PhysicsDragXZ extends Component {
     input.on(Input.EventType.MOUSE_DOWN, this._onDown, this);
     input.on(Input.EventType.MOUSE_MOVE, this._onMove, this);
     input.on(Input.EventType.MOUSE_UP, this._onUp, this);
-    this._generalObject = this.getComponent(GeneralObject);
   }
 
   private _screenToRay(screenPos: Vec2) {
@@ -47,7 +44,6 @@ export class PhysicsDragXZ extends Component {
   }
 
   private _onDown (event: any) {
-    if (this._generalObject.won) return;
     const loc = event.getLocation();
     this._screenToRay(loc);
 
