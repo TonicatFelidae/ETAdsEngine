@@ -128,7 +128,7 @@
     "_clip": null,
     "_loop": true,
     "_playOnAwake": true,
-    "_volume": 0.5,
+    "_volume": 0.2,
     "_id": ""
   },
   {
@@ -325,8 +325,34 @@
       "__id__": 15
     },
     "audioSources": [],
-    "bgClips": [],
-    "efClips": [],
+    "bgClips": [
+      {
+        "__uuid__": "33a2b9a7-57bd-4a7e-aaf1-54512bd289f1",
+        "__expectedType__": "cc.AudioClip"
+      }
+    ],
+    "efClips": [
+      {
+        "__uuid__": "e44a2045-223d-4cae-b95d-ebdf48400f47",
+        "__expectedType__": "cc.AudioClip"
+      },
+      {
+        "__uuid__": "9dbbfd53-6895-4e52-a049-e90b610a3ee2",
+        "__expectedType__": "cc.AudioClip"
+      },
+      {
+        "__uuid__": "b902fcea-f5b4-4701-ae0b-859f64f3fc4b",
+        "__expectedType__": "cc.AudioClip"
+      },
+      {
+        "__uuid__": "d7e400fd-e4e5-4e75-bd56-47cc2cf652fa",
+        "__expectedType__": "cc.AudioClip"
+      },
+      {
+        "__uuid__": "9c1b6b74-b8c9-40ed-bb5f-4a7efb000314",
+        "__expectedType__": "cc.AudioClip"
+      }
+    ],
     "uiClips": [],
     "_pp_effect3D": null,
     "_id": ""
