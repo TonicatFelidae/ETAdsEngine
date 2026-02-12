@@ -2,8 +2,8 @@ import { _decorator, Component, Node } from 'cc';
 import { IUINode } from '../../../ETSupportKit/Abstract/IUINode';
 const { ccclass, property } = _decorator;
 
-@ccclass('GameUI')
-export class GameUI extends IUINode {
+@ccclass('GameUIBase')
+export class GameUIBase extends IUINode {
 
     start() {
 

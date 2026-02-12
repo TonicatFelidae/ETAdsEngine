@@ -3,8 +3,8 @@ import { IUINode } from '../../../ETSupportKit/Abstract/IUINode';
 import { SoundGeneral, SoundType } from '../../../ETSupportKit/SoundGeneral';
 const { ccclass, property } = _decorator;
 
-@ccclass('EndUI')
-export class EndUI extends IUINode {
+@ccclass('EndUIBase')
+export class EndUIBase extends IUINode {
     @property(Node)
     winNode: Node = null;
     

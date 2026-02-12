@@ -2,8 +2,8 @@ import { _decorator, Component, Node } from 'cc';
 import { IUINode } from '../../../ETSupportKit/Abstract/IUINode';
 const { ccclass, property } = _decorator;
 
-@ccclass('BeginUI')
-export class BeginUI extends IUINode {
+@ccclass('BeginUIBase')
+export class BeginUIBase extends IUINode {
     @property(Node)
     public tur1: Node | null = null; // Node to hold the circle
     //@property(Node)
