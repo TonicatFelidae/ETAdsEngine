@@ -15,7 +15,7 @@ export class SafeArea extends Component {
         const scaleX = design.width / visible.width;
         const scaleY = design.height / visible.height;
 
-        const top = (visible.height - (safe.y + safe.height * 2)) * scaleY;
+        const top = (visible.height - (safe.y + safe.height)) * scaleY;
         const bottom = safe.y * scaleY;
         const left = safe.x * scaleX;
         const right = (visible.width - (safe.x + safe.width)) * scaleX;
