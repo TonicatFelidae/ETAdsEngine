@@ -1,4 +1,4 @@
-import { _decorator, Component, Node, sys } from 'cc';
+import { _decorator, Component, Node, Prefab, sys } from 'cc';
 import { super_html_playable } from './SuperHtml/super_html_playable';
 const { ccclass, property } = _decorator;
 const playableAds = new super_html_playable();
@@ -13,6 +13,10 @@ export class AdsSetup extends Component {
     {
         sys.openURL(this.gameUrl);
         playableAds.download();
+    }
+    public gameEnd()
+    {
+        playableAds.game_end();
     }
 }
 
