@@ -5,7 +5,7 @@ const playableAds = new super_html_playable();
 @ccclass('AdsSetup')
 export class AdsSetup extends Component {
     @property
-    public isAutoSetup: boolean = true;
+    public isAutoSetup: boolean = false;
     @property
     public gameUrl: string = "https://example.com";
     @property
@@ -24,7 +24,6 @@ export class AdsSetup extends Component {
     
     public touchDownloadButton()
     {
-        sys.openURL(this.gameUrl);
         playableAds.download();
     }
     public gameEnd()
