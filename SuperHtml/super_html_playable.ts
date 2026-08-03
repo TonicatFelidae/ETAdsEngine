@@ -9,7 +9,15 @@ export class super_html_playable {
     download() {
         console.log("download");
         //@ts-ignore
-        window.super_html && super_html.download();
+        if (typeof window.playableSDK !== 'undefined') {
+            //@ts-ignore
+            window.playableSDK.openAppStore();
+        } else if (typeof (window as any).openAppStore !== 'undefined') {
+            (window as any).openAppStore();
+        } else {
+            //@ts-ignore
+            window.super_html && super_html.download();
+        }
     }
 
     game_end() {
