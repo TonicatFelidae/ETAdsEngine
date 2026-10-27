@@ -1,4 +1,4 @@
-import { _decorator, Component, debug, Node } from 'cc';
+import { _decorator, Component, js, Node } from 'cc';
 import { IUINode } from './Abstract/IUINode';
 import { Singleton } from './Abstract/Singleton';
 const { ccclass, property } = _decorator;
@@ -12,62 +12,115 @@ export enum ShowType {
 export class UINodeManager extends Singleton<UINodeManager> {
     @property([Node])
     private uiNodes: Node[] = [];
-    private uiMap: Map<string, IUINode> = new Map();
+    private uiMap: Map<any, IUINode> = new Map();
 
     onLoad() {
         super.onLoad();
         // Populate the map
         this.populateMap();
-        
     }
+
     populateMap() {
         if (!this.uiMap || this.uiMap.size === 0) {
-        for (let node of this.uiNodes) {
-            // Get all components on this node
-            const components = node.getComponents(Component);
+            for (let node of this.uiNodes) {
+                if (!node) continue;
+                // Get all components on this node
+                const components = node.getComponents(Component);
 
-            // Find the first component that extends IUINode
-            for (const comp of components) {
-                if (comp instanceof IUINode) {
-                    
-            console.log(`comp.constructor.name "${ comp.constructor.name}"`);
-                    this.uiMap.set(comp.constructor.name, comp as IUINode);
-                    break;
+                // Find the first component that extends IUINode
+                for (const comp of components) {
+                    if (comp instanceof IUINode || typeof (comp as any).Show === 'function') {
+                        // 1. Map by registered @ccclass name (immune to minification)
+                        const className = js.getClassName(comp);
+                        if (className) {
+                            this.uiMap.set(className, comp as IUINode);
+                        }
+                        // 2. Map by constructor reference (immune to minification)
+                        this.uiMap.set(comp.constructor, comp as IUINode);
+                        // 3. Map by node name
+                        this.uiMap.set(node.name, comp as IUINode);
+                        break;
+                    }
                 }
             }
         }
     }
-    }
-    public Show<T extends IUINode>(ctor: { new(): T }, isShow: boolean = true, type: ShowType = ShowType.Addition) {
-    const className = ctor.name; // Get class name automatically
-    const uiComp = this.uiMap.get(className);
 
-    if (!uiComp) {
-        console.warn(`UINodeManager: UI node "${className}" not found`);
-        return;
+    private getComp<T extends IUINode>(ctor: { new(): T } | string): T | undefined {
+        if (typeof ctor === 'string') {
+            return this.uiMap.get(ctor) as T | undefined;
+        }
+
+        // 1. Try constructor reference lookup
+        let uiComp = this.uiMap.get(ctor);
+        if (uiComp) return uiComp as T;
+
+        // 2. Try Cocos ccclass name lookup
+        const className = js.getClassName(ctor);
+        if (className) {
+            uiComp = this.uiMap.get(className);
+            if (uiComp) return uiComp as T;
+        }
+
+        // 3. Fallback: search directly on uiNodes array via getComponent(ctor)
+        for (const node of this.uiNodes) {
+            if (!node) continue;
+            const comp = node.getComponent(ctor);
+            if (comp) {
+                if (className) this.uiMap.set(className, comp as any);
+                this.uiMap.set(ctor, comp as any);
+                return comp as T;
+            }
+        }
+
+        return undefined;
     }
 
-    if (isShow && type === ShowType.Single) {
-        // Hide all other UI nodes except the one we are showing
-        this.uiMap.forEach((comp, key) => {
-            if (key !== className) {
-                comp.Show(false);
+    public Show<T extends IUINode>(ctor: { new(): T } | string, isShow: boolean = true, type: ShowType = ShowType.Addition) {
+        this.populateMap();
+        const uiComp = this.getComp(ctor);
+
+        if (!uiComp) {
+            const name = typeof ctor === 'string' ? ctor : (js.getClassName(ctor) || (ctor as any).name);
+            console.warn(`UINodeManager: UI node "${name}" not found`);
+            return;
+        }
+
+        if (isShow && type === ShowType.Single) {
+            // Hide all other UI nodes except the one we are showing
+            const visited = new Set<IUINode>();
+            this.uiMap.forEach((comp) => {
+                if (comp !== uiComp && !visited.has(comp)) {
+                    visited.add(comp);
+                    comp.Show(false);
+                }
+            });
+        }
+
+        uiComp.Show(isShow);
+    }
+
+    /** Show or hide all UI nodes */
+    public ShowAll(isShow: boolean) {
+        this.populateMap();
+        // 1. Directly deactivate / activate the assigned UI nodes
+        for (const node of this.uiNodes) {
+            if (node) {
+                node.active = isShow;
+            }
+        }
+        // 2. Also invoke Show(isShow) on all IUINode components (without duplicates)
+        const visited = new Set<IUINode>();
+        this.uiMap.forEach(ui => {
+            if (!visited.has(ui)) {
+                visited.add(ui);
+                ui.Show(isShow);
             }
         });
     }
 
-    uiComp.Show(isShow);
-}
-    /** Show or hide all UI nodes */
-    public ShowAll(isShow: boolean) {
+    public GetItem<T extends IUINode>(ctor: { new(): T } | string): T | undefined {
         this.populateMap();
-        this.uiMap.forEach(ui => ui.Show(isShow));
+        return this.getComp(ctor);
     }
-    public GetItem<T extends IUINode>(ctor: { new(): T }): T | undefined {
-    const className = ctor.name; // Get "EndUI"
-    const uiComp = this.uiMap.get(className);
-    return uiComp as T | undefined;
 }
-}
-
-
